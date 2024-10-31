@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Tugas Harian</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            width: 300px;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 8px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .edit, .delete {
+            margin-left: 10px;
+            cursor: pointer;
+            color: #007bff;
+        }
+        .edit:hover, .delete:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Daftar Tugas Harian</h2>
+        <input type="text" id="taskInput" placeholder="Tambahkan tugas baru">
+        <button onclick="addTask()">Tambah Tugas</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const taskText = taskInput.value.trim();
+
+            if (taskText === "") {
+                alert("Tugas tidak boleh kosong!");
+                return;
+            }
+
+            const li = document.createElement("li");
+            const taskSpan = document.createElement("span");
+            taskSpan.textContent = taskText;
+
+            const editBtn = document.createElement("span");
+            editBtn.textContent = "Edit";
+            editBtn.classList.add("edit");
+            editBtn.onclick = function() { editTask(taskSpan); };
+
+            const deleteBtn = document.createElement("span");
+            deleteBtn.textContent = "Hapus";
+            deleteBtn.classList.add("delete");
+            deleteBtn.onclick = function() { deleteTask(li); };
+
+            li.appendChild(taskSpan);
+            li.appendChild(editBtn);
+            li.appendChild(deleteBtn);
+            document.getElementById("taskList").appendChild(li);
+
+            taskInput.value = "";
+        }
+
+        function deleteTask(taskElement) {
+            taskElement.remove();
+        }
+
+        function editTask(taskSpan) {
+            const newTask = prompt("Edit tugas:", taskSpan.textContent);
+            if (newTask !== null && newTask.trim() !== "") {
+                taskSpan.textContent = newTask.trim();
+            }
+        }
+    </script>
+</body>
+</html>
